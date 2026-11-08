@@ -1,0 +1,18 @@
+# Metadata service (single Machine + volume; the documented single point of failure). No [http_service]: not public.
+app = "pando-meta"
+primary_region = "lhr"
+
+[build]
+  dockerfile = "Dockerfile"   # relative to this file (fly resolves it from the config directory)
+
+[env]
+  PANDO_ROLE = "meta"
+  # secret: PANDO_META_SECRET (fly secrets set -a pando-meta)
+
+[mounts]
+  source = "pando_meta"
+  destination = "/data"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

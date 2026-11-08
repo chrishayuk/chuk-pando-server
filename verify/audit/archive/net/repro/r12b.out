@@ -1,0 +1,6 @@
+NOTE uri fetch rc=0 ''
+NOTE pack dir: pack-029d08823bd8a8eab510ad6ac75c823cfd3ed31e.idx pack-029d08823bd8a8eab510ad6ac75c823cfd3ed31e.keep pack-029d08823bd8a8eab510ad6ac75c823cfd3ed31e.pack pack-029d08823bd8a8eab510ad6ac75c823cfd3ed31e.rev pack-7541413e26453db2c8e54e844077e5ed88121b81.idx pack-7541413e26453db2c8e54e844077e5ed88121b81.pack pack-7541413e26453db2c8e54e844077e5ed88121b81.rev
+PASS fsck after local fetch + URI fetch: 
+NOTE verify-pack pack-029d08823: rc=0 ''
+NOTE verify-pack pack-7541413e2: rc=0 ''
+== R12b URI fetch after local fetch: no defect observed (0 failed checks)

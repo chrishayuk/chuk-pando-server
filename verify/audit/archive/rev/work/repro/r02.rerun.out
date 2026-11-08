@@ -1,0 +1,12 @@
+NOTE (a) push rc=0; client saw: ['To http://127.0.0.1:61360/r.git', '   b2d92b1..789e737  main -> main']
+NOTE (a) server state via fe1: main=789e737c02 (pushed 789e737c02)
+PASS (a) a push reported as failed to the client did not in fact update the ref
+NOTE (a) client retry rc=0: 'Everything up-to-date'
+NOTE (b) push rc=0; client lines: ['   789e737..384f60d  main -> main', ' * [new branch]      topic -> topic']
+NOTE (b) server: main=384f60dbca (pushed 384f60dbca), topic=fc1daf7368 (pushed fc1daf7368)
+PASS (b) a ref whose commit succeeded and whose reply was received is not reported as failed
+PASS (c) first push via fe0 after meta restart succeeds ('To http://127.0.0.1:61360/r.git\n   384f60d..876f553  main -> main')
+PASS (c) acknowledged refs/heads/topic survives the service SIGKILL
+PASS (c) push via fe1 on top of fe0's post-restart commit succeeds ('To http://127.0.0.1:61361/r.git\n   876f553..05fec2d  main -> main')
+PASS (c) clone from fe1 passes fsck 
+== R02 lost commit reply / meta restart: no defect observed (0 failed checks)

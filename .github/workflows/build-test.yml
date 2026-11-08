@@ -1,0 +1,264 @@
+# Build the five release artifacts with cargo-dist and test each one natively on its own platform. Dispatch modes:
+# attest_probe (only checks whether attestations work here) and draft_tag (tests a draft release's uploaded assets).
+# NOTHING IS PUBLISHED: no GitHub Release, no tag, no attestation, no upload outside this run's private workflow
+# artifacts. Publication is the separate, tag-triggered release.yml, which a maintainer starts (docs/RELEASING.md).
+name: Build and test (no publishing)
+
+on:
+  workflow_dispatch:
+    inputs:
+      attest_probe:
+        description: "Only probe whether actions/attest works on this (private) repository; build nothing"
+        type: boolean
+        default: false
+      draft_tag:
+        description: "Test the assets of this DRAFT release (e.g. v0.1.0) instead of building (docs/RELEASING.md)"
+        type: string
+        default: ""
+  push:
+    branches: [main, release-*]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-test-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: never
+  GIT_CONFIG_NOSYSTEM: "1"
+
+jobs:
+  # Can this repository create GitHub artifact attestations while private? (release.yml attests every archive; on
+  # a private repository of a personal account GitHub does not offer them.) Attests a throwaway text file.
+  attest-probe:
+    if: github.event_name == 'workflow_dispatch' && inputs.attest_probe
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - run: echo "pando attestation probe $(date -u +%FT%TZ)" > probe.txt
+      - uses: actions/attest@v4
+        with:
+          subject-path: probe.txt
+          predicate-type: https://slsa.dev/provenance/v1
+          predicate: '{}'
+
+  build:
+    if: github.event_name != 'workflow_dispatch' || (!inputs.attest_probe && inputs.draft_tag == '')
+    name: build + native tests (${{ matrix.target }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: aarch64-apple-darwin, runner: macos-15, ext: tar.xz, py: python3 }
+          - { target: x86_64-apple-darwin, runner: macos-15-intel, ext: tar.xz, py: python3 }
+          - { target: x86_64-unknown-linux-gnu, runner: ubuntu-22.04, ext: tar.xz, py: python3 }
+          - { target: aarch64-unknown-linux-gnu, runner: ubuntu-22.04-arm, ext: tar.xz, py: python3 }
+          - { target: x86_64-pc-windows-msvc, runner: windows-2022, ext: zip, py: python }
+    runs-on: ${{ matrix.runner }}
+    defaults:
+      run:
+        shell: bash
+    env:
+      PY: ${{ matrix.py }}
+    steps:
+      - name: enable windows longpaths
+        if: runner.os == 'Windows'
+        run: git config --global core.longpaths true
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0   # pando version names the last commit that changed server/
+      - name: Install dist 0.34.0 (unix)
+        if: runner.os != 'Windows'
+        # retried: github.com release downloads have returned transient 503s on these runners
+        run: "for i in 1 2 3 4 5; do curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.34.0/cargo-dist-installer.sh | sh && exit 0; sleep 20; done; exit 1"
+      - name: Install dist 0.34.0 (windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        # the zip directly, retried (the generated installer exits on the first failed download)
+        run: |
+          $u = "https://github.com/axodotdev/cargo-dist/releases/download/v0.34.0/cargo-dist-x86_64-pc-windows-msvc.zip"
+          $ok = $false
+          for ($i = 0; $i -lt 6 -and -not $ok; $i++) {
+            try { Invoke-WebRequest $u -OutFile dist.zip -MaximumRetryCount 3 -RetryIntervalSec 10; $ok = $true } catch { Write-Host "attempt $i failed: $_"; Start-Sleep 20 }
+          }
+          if (-not $ok) { exit 1 }
+          Expand-Archive dist.zip -DestinationPath distbin -Force
+          $exe = Get-ChildItem distbin -Recurse -Filter dist.exe | Select-Object -First 1
+          New-Item -ItemType Directory -Force "$HOME\.cargo\bin" | Out-Null
+          Copy-Item $exe.FullName "$HOME\.cargo\bin\dist.exe"
+          & "$HOME\.cargo\bin\dist.exe" --version
+      - name: Platform facts
+        run: |
+          uname -a || true; git --version; $PY --version; rustc --version; cargo --version
+      - name: Unit tests (native)
+        run: |
+          mkdir -p reports
+          cd server && cargo test --release 2>&1 | tee ../reports/unit-${{ matrix.target }}.txt
+          test "${PIPESTATUS[0]}" = 0
+      - name: Third-party licence file is current
+        run: $PY verify/release/third_party_licenses.py --check THIRD-PARTY-LICENSES.txt
+      - name: Build the release artifact (dist)
+        run: |
+          dist build --print=linkage --output-format=json --artifacts=local --target=${{ matrix.target }} > dist-manifest.json
+          cp dist-manifest.json target/distrib/${{ matrix.target }}-dist-manifest.json
+          ls -l target/distrib
+          cat target/distrib/pando-${{ matrix.target }}.${{ matrix.ext }}.sha256
+      - name: Archive attribution (NOTICE names the contributors; licence files present)
+        run: |
+          mkdir -p x && cd x
+          if [ "${{ matrix.ext }}" = zip ]; then unzip -q ../target/distrib/pando-${{ matrix.target }}.zip; else tar xf ../target/distrib/pando-${{ matrix.target }}.tar.xz; fi
+          N=$(find . -name NOTICE); L=$(find . -name LICENSE); T=$(find . -name THIRD-PARTY-LICENSES.txt)
+          test -n "$N" && test -n "$L" && test -n "$T"
+          grep -x 'Copyright 2026 the chuk-pando-server contributors' "$N"
+          test "$(grep -ci '^copyright' "$N")" = 1   # the contributors line is the only copyright holder named
+          md5sum "$L" 2>/dev/null || md5 "$L"
+      - name: Smoke test the packaged artifact (native)
+        run: |
+          $PY verify/release/smoke.py target/distrib/pando-${{ matrix.target }}.${{ matrix.ext }} \
+            --target ${{ matrix.target }} --port 18731 --junit reports/smoke-${{ matrix.target }}.xml
+      - name: Upload artifact (private to this run)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-${{ matrix.target }}
+          path: |
+            target/distrib/pando-${{ matrix.target }}.${{ matrix.ext }}
+            target/distrib/pando-${{ matrix.target }}.${{ matrix.ext }}.sha256
+            target/distrib/${{ matrix.target }}-dist-manifest.json
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reports-${{ matrix.target }}
+          path: reports/
+
+  installers:
+    name: installers (global artifacts)
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0   # pando version names the last commit that changed server/
+      - name: Install dist 0.34.0
+        # retried: github.com release downloads have returned transient 503s on these runners
+        run: "for i in 1 2 3 4 5; do curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.34.0/cargo-dist-installer.sh | sh && exit 0; sleep 20; done; exit 1"
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: build-*
+          path: target/distrib/
+          merge-multiple: true
+      - name: Build installers and the checksum list (dist)
+        run: |
+          dist build --output-format=json --artifacts=global > dist-manifest.json
+          # the same hardening release.yml applies: the .ps1 verifies SHA-256, the .sh fails closed
+          python3 verify/release/patch_installers.py target/distrib
+          ls -l target/distrib; cat target/distrib/sha256.sum
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-candidate
+          path: |
+            target/distrib/pando-*.tar.xz
+            target/distrib/pando-*.zip
+            target/distrib/pando-*.sha256
+            target/distrib/pando-installer.sh
+            target/distrib/pando-installer.ps1
+            target/distrib/sha256.sum
+            target/distrib/source.tar.gz
+            target/distrib/source.tar.gz.sha256
+
+  # Draft mode: the assets actually uploaded to a draft release become the candidate. Seeing a draft needs push
+  # access, hence contents: write; this job only reads (gh release download / view) and verifies attestations.
+  fetch-draft:
+    name: fetch and verify draft release ${{ inputs.draft_tag }}
+    if: github.event_name == 'workflow_dispatch' && inputs.draft_tag != '' && !inputs.attest_probe
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      attestations: read
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TAG: ${{ inputs.draft_tag }}
+    steps:
+      - name: The release is still a draft
+        run: test "$(gh release view "$TAG" -R "$GITHUB_REPOSITORY" --json isDraft -q .isDraft)" = true
+      - name: Download every asset of the draft
+        run: gh release download "$TAG" -R "$GITHUB_REPOSITORY" -D rc && ls -l rc
+      - name: Checksums of the uploaded archives
+        run: cd rc && sed 's/ \*/  /' sha256.sum | sha256sum -c
+      - name: The uploaded installers are the hardened ones
+        run: grep -q 'pando release patch' rc/pando-installer.sh && grep -q 'pando release patch' rc/pando-installer.ps1
+      - name: GitHub artifact attestations of every archive (signed by release.yml of this repository)
+        run: |
+          for f in rc/pando-*.tar.xz rc/pando-*.zip; do
+            gh attestation verify "$f" --repo "$GITHUB_REPOSITORY" \
+              --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/release.yml" || exit 1
+          done
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-candidate
+          path: rc/
+
+  install-test:
+    name: install from local artifacts (${{ matrix.runner }})
+    needs: [installers, fetch-draft]
+    if: ${{ !cancelled() && (needs.installers.result == 'success' || needs.fetch-draft.result == 'success') }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, macos-15-intel, ubuntu-22.04, ubuntu-22.04-arm, windows-2022]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0   # pando version names the last commit that changed server/
+      - uses: actions/download-artifact@v8
+        with:
+          name: release-candidate
+          path: rc/
+      - name: Shell installer, clean HOME, from a loopback HTTP server
+        if: runner.os != 'Windows'
+        run: sh verify/release/installer_test.sh rc 18741
+      - name: PowerShell installer, clean profile, from a loopback HTTP server
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./verify/release/installer_test.ps1 -Dist rc -Port 18741
+
+  readme-test:
+    name: README-first user (${{ matrix.runner }})
+    needs: [installers, fetch-draft]
+    if: ${{ !cancelled() && (needs.installers.result == 'success' || needs.fetch-draft.result == 'success') }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { runner: macos-15, py: python3 }
+          - { runner: macos-15-intel, py: python3 }
+          - { runner: ubuntu-22.04, py: python3 }
+          - { runner: ubuntu-22.04-arm, py: python3 }
+          - { runner: windows-2022, py: python }
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v8
+        with:
+          name: release-candidate
+          path: rc/
+      - name: Follow the README literally (installer from a loopback host; port 8080 as written)
+        shell: bash
+        run: ${{ matrix.py }} verify/release/readme_test.py --artifacts rc --junit readme-${{ matrix.runner }}.xml
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: readme-${{ matrix.runner }}
+          path: readme-${{ matrix.runner }}.xml

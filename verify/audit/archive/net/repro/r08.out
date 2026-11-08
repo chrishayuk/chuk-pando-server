@@ -1,0 +1,8 @@
+NOTE before: lsn(a)=1 lsn(b)=72 lsn(delete)=74 stable=74
+PASS checkpoint happened (['snapshot.1'])
+PASS all committed keys survive checkpoint + SIGKILL
+NOTE after restart: stable=72
+NOTE new commit lsn=73; changes above old mark 74: []
+FAIL stable LSN does not go backwards across checkpoint + restart (latent: needs a delete as newest commit)
+FAIL a commit after restart is visible to a reader holding the pre-restart mark
+== R08 meta-serve checkpoint + restart: DEFECT REPRODUCED (2 failed checks)

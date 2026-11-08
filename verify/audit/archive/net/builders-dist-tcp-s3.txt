@@ -1,0 +1,10 @@
+..F..s.....                                                              [100%]
+=================================== FAILURES ===================================
+E   AssertionError: False is not true : the stalled push finished before the unrelated pushes: stall not effective
+----------------------------- Captured stdout call -----------------------------
+D2 stalled: {'fastA': (0.054895877838134766, 'ok'), 'slow': (3.0391550064086914, 'ok'), 'rival': (5.429958820343018, "ng cannot lock ref 'refs/heads/slow': reference already exists"), 'fastB': (5.380280017852783, 'ok')}
+/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/case.py:727: AssertionError: False is not true : the stalled push finished before the unrelated pushes: stall not effective
+=========================== short test summary info ============================
+FAILED test_dist.py::D2StalledCommit::test_unrelated_branches_do_not_wait_for_a_stalled_commit
+SKIPPED [1] test_dist.py:213: S3 mode: no shared tmp directory (each frontend's cache is private)
+1 failed, 9 passed, 1 skipped in 53.27s

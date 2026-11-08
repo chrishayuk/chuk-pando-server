@@ -1,0 +1,8 @@
+NOTE after pushes with injected job panics: covers a=0 b=0
+NOTE deleted repos/a/packs/a83cc5ec3d0e67c10e6458ecca116e38f5b2f340.pack (206 B) -> 204
+NOTE operator maintain: rc=1 out='pando: maintain failed: 500 pack a83cc5ec3d0e67c10e6458ecca116e38f5b2f340 is missing from the object store'
+NOTE compaction_error events after restart: 11 (e.g. {'error': 'pack a83cc5ec3d0e67c10e6458ecca116e38f5b2f340 is missing from the object store', 'ev': 'compaction_error', 'job': 'retry', 'node': 'server-43517', 'seq': 9, 'ts_ms': 1794075435825})
+NOTE 15 s after restart (+ maintain): covers a=0 b=0
+FAIL intact repository b gets its due cover after the outage although repository a is broken
+NOTE control, 6 s after restoring a's pack: covers a=1 b=1
+== R21 F1: one failing repository blocks catch-up of all later repositories: DEFECT REPRODUCED (1 failed checks)

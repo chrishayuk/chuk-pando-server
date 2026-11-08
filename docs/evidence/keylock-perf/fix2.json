@@ -1,0 +1,71 @@
+{
+ "server": "<repo>/.worktrees/fix/server/run.sh",
+ "unix-fs": {
+  "writers_8": {
+   "writers": 8,
+   "pushes": 80,
+   "pushes_per_s": 35.7,
+   "latency_ms": {
+    "median": 129.0,
+    "p95": 156.3
+   }
+  },
+  "writers_16": {
+   "writers": 16,
+   "pushes": 160,
+   "pushes_per_s": 50.4,
+   "latency_ms": {
+    "median": 182.7,
+    "p95": 225.5
+   }
+  }
+ },
+ "tcp-fs": {
+  "writers_8": {
+   "writers": 8,
+   "pushes": 80,
+   "pushes_per_s": 37.0,
+   "latency_ms": {
+    "median": 132.1,
+    "p95": 153.2
+   }
+  },
+  "writers_16": {
+   "writers": 16,
+   "pushes": 160,
+   "pushes_per_s": 52.7,
+   "latency_ms": {
+    "median": 190.9,
+    "p95": 247.6
+   }
+  },
+  "metadata_rpc_rtt_us": 29.2
+ },
+ "tcp-s3": {
+  "writers_8": {
+   "writers": 8,
+   "pushes": 80,
+   "pushes_per_s": 48.8,
+   "latency_ms": {
+    "median": 108.4,
+    "p95": 134.8
+   }
+  },
+  "writers_16": {
+   "writers": 16,
+   "pushes": 160,
+   "pushes_per_s": 46.9,
+   "latency_ms": {
+    "median": 152.9,
+    "p95": 790.5
+   }
+  },
+  "metadata_rpc_rtt_us": 27.7
+ },
+ "cold_cache_clone": {
+  "versions": 50,
+  "cold_s": 0.144,
+  "warm_s": 0.129,
+  "object_gets": 12
+ }
+}

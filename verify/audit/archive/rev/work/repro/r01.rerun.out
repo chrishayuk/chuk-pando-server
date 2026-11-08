@@ -1,0 +1,10 @@
+PASS outage was triggered by the compactor's cover read
+NOTE fe0 log panic lines: thread 'compactor' (71858397) panicked at src/meta.rs:873:50: | metadata service unavailable: Connection reset by peer (os error 54)
+PASS pushes through fe0 succeed after the outage
+NOTE covers in metadata after 8 versions (fe0 only): 2
+PASS fe0 built covers for versions 1-4 and 5-8 after the outage (compactor alive)
+NOTE fe0 maintain rc=0 out='compaction complete: 1 repositories, 0 covers built, 0 copies prepared\n' err=''
+PASS run.sh maintain on fe0 succeeds after the outage
+NOTE control fe1 maintain rc=0 out='compaction complete: 1 repositories, 0 covers built, 0 copies prepared\n'
+NOTE covers after control frontend maintain: 2
+== R01 metadata outage poisons MAINT_LOCK: no defect observed (0 failed checks)

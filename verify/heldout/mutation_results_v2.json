@@ -1,0 +1,293 @@
+{
+ "control": {
+  "failed": [],
+  "killed": false,
+  "skipped": [
+   "heavy push finished (took 10.4s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 182,
+  "summary": "34 passed, 1 skipped, 16 subtests passed in 181.43s (0:03:01)"
+ },
+ "lostupdate": {
+  "failed": [
+   "cg1.py::CG1::test_lease_stale_rejected",
+   "cg2.py::CG2::test_same_ref_race_exactly_one_wins",
+   "review1.py::R1::test_F11_atomic_push_is_atomic_if_advertised",
+   "review1.py::R1::test_F1_cas_holds_on_non_main_refs_and_races_on_branch",
+   "review1.py::R1::test_F1_create_over_existing_ref_is_rejected"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 10.6s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 182,
+  "summary": "6 failed, 30 passed, 1 skipped, 14 subtests passed in 181.73s (0:03:01)"
+ },
+ "nodurable": {
+  "failed": [
+   "cg2.py::CG2::test_crash_durability_and_recovery",
+   "cg2.py::CG2::test_crash_during_large_push_leaves_consistent_repo",
+   "review1.py::R1::test_F3a_kill_while_pack_body_is_in_flight",
+   "review1.py::R1::test_F3b_ack_then_immediate_kill_never_loses_acknowledged_push"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 11.3s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 157,
+  "summary": "4 failed, 30 passed, 1 skipped, 16 subtests passed in 156.92s (0:02:36)"
+ },
+ "staleread": {
+  "failed": [
+   "cg1.py::CG1::test_delete_branch",
+   "cg2.py::CG2::test_ack_implies_visible_to_new_reader",
+   "cg2.py::CG2::test_same_ref_race_exactly_one_wins",
+   "cg3.py::CG3::test_delete_recreate_unrelated_history",
+   "cg3.py::CG3::test_force_push_drops_history_others_depend_on",
+   "cg3.py::CG3::test_retention_after_churn_and_maintenance",
+   "cg4.py::CG4::test_independent_writers_all_succeed_and_are_visible",
+   "review1.py::R1::test_F1_cas_holds_on_non_main_refs_and_races_on_branch",
+   "review1.py::R1::test_F1_delete_with_wrong_old_rejected",
+   "review1.py::R1::test_F3a_kill_while_pack_body_is_in_flight",
+   "review1.py::R1::test_F5_stock_client_can_update_force_and_delete_existing_non_trunk_branch"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 7.4s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 148,
+  "summary": "12 failed, 24 passed, 1 skipped, 14 subtests passed in 147.50s (0:02:27)"
+ },
+ "backwards": {
+  "failed": [
+   "cg2.py::CG2::test_ack_implies_visible_to_new_reader",
+   "cg2.py::CG2::test_same_ref_race_exactly_one_wins",
+   "cg3.py::CG3::test_concurrent_writer_and_readers_see_complete_monotonic_history",
+   "cg4.py::CG4::test_independent_writers_all_succeed_and_are_visible",
+   "cg4.py::CG4::test_per_ref_monotonic_no_dangling_under_concurrent_updates",
+   "review1.py::R1::test_F1_cas_holds_on_non_main_refs_and_races_on_branch"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 7.1s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 156,
+  "summary": "6 failed, 28 passed, 1 skipped, 16 subtests passed in 155.99s (0:02:35)"
+ },
+ "deleteignore": {
+  "failed": [
+   "cg1.py::CG1::test_delete_branch",
+   "cg3.py::CG3::test_delete_recreate_unrelated_history",
+   "cg3.py::CG3::test_retention_after_churn_and_maintenance",
+   "cg3.py::CG3::test_stacked_branches_then_delete_base_branch",
+   "cg4.py::CG4::test_independent_writers_all_succeed_and_are_visible",
+   "review1.py::R1::test_F1_delete_with_wrong_old_rejected",
+   "review1.py::R1::test_F5_stock_client_can_update_force_and_delete_existing_non_trunk_branch"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 7.4s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 163,
+  "summary": "8 failed, 28 passed, 1 skipped, 14 subtests passed in 162.97s (0:02:42)"
+ },
+ "missingobj": {
+  "failed": [
+   "cg1.py::CG1::test_branches_and_tags",
+   "cg1.py::CG1::test_force_push_accepted",
+   "cg1.py::CG1::test_lease_stale_rejected",
+   "cg1.py::CG1::test_push_new_branch_and_clone",
+   "cg1.py::CG1::test_update_and_incremental_fetch",
+   "cg2.py::CG2::test_ack_implies_visible_to_new_reader",
+   "cg2.py::CG2::test_crash_durability_and_recovery",
+   "cg2.py::CG2::test_crash_during_large_push_leaves_consistent_repo",
+   "cg2.py::CG2::test_same_ref_race_exactly_one_wins",
+   "cg3.py::CG3::test_chain_of_stock_pushes_every_intermediate_state_converges",
+   "cg3.py::CG3::test_concurrent_writer_and_readers_see_complete_monotonic_history",
+   "cg3.py::CG3::test_delete_recreate_unrelated_history",
+   "cg3.py::CG3::test_duplicate_empty_and_noop_pushes_and_tags",
+   "cg3.py::CG3::test_force_push_drops_history_others_depend_on",
+   "cg3.py::CG3::test_random_edit_workload_clones_match",
+   "cg3.py::CG3::test_retention_after_churn_and_maintenance",
+   "cg3.py::CG3::test_stacked_branches_then_delete_base_branch",
+   "cg4.py::CG4::test_independent_writers_all_succeed_and_are_visible",
+   "cg4.py::CG4::test_no_global_lock_slow_push_does_not_block_other_branch",
+   "cg4.py::CG4::test_per_ref_monotonic_no_dangling_under_concurrent_updates",
+   "review1.py::R1::test_F10_tags_survive_maintenance_and_maintenance_concurrent_with_pushes",
+   "review1.py::R1::test_F1_cas_holds_on_non_main_refs_and_races_on_branch",
+   "review1.py::R1::test_F26_clients_with_packfile_uris_enabled_still_work",
+   "review1.py::R1::test_F3a_kill_while_pack_body_is_in_flight",
+   "review1.py::R1::test_F3b_ack_then_immediate_kill_never_loses_acknowledged_push",
+   "review1.py::R1::test_F4_unrelated_push_not_blocked_while_another_push_is_being_processed",
+   "review1.py::R1::test_F5_stock_client_can_update_force_and_delete_existing_non_trunk_branch"
+  ],
+  "killed": true,
+  "skipped": [],
+  "seconds": 69,
+  "summary": "32 failed, 13 passed, 1 error, 6 subtests passed in 68.47s (0:01:08)"
+ },
+ "globallock": {
+  "failed": [
+   "cg4.py::CG4::test_no_global_lock_slow_push_does_not_block_other_branch"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 8.4s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 171,
+  "summary": "1 failed, 33 passed, 1 skipped, 16 subtests passed in 170.96s (0:02:50)"
+ },
+ "lostupdate_branch": {
+  "failed": [
+   "review1.py::R1::test_F11_atomic_push_is_atomic_if_advertised",
+   "review1.py::R1::test_F1_cas_holds_on_non_main_refs_and_races_on_branch",
+   "review1.py::R1::test_F1_create_over_existing_ref_is_rejected"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 9.2s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 168,
+  "summary": "3 failed, 31 passed, 1 skipped, 16 subtests passed in 167.52s (0:02:47)"
+ },
+ "createoverwrite": {
+  "failed": [
+   "review1.py::R1::test_F1_create_over_existing_ref_is_rejected"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 6.5s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 168,
+  "summary": "1 failed, 33 passed, 1 skipped, 16 subtests passed in 167.25s (0:02:47)"
+ },
+ "globalcommit": {
+  "failed": [],
+  "killed": false,
+  "skipped": [
+   "heavy push finished (took 8.0s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 173,
+  "summary": "34 passed, 1 skipped, 16 subtests passed in 172.75s (0:02:52)"
+ },
+ "nodurable_fakepid": {
+  "failed": [
+   "cg2.py::CG2::test_crash_durability_and_recovery",
+   "cg2.py::CG2::test_crash_during_large_push_leaves_consistent_repo",
+   "review1.py::R1::test_F3a_kill_while_pack_body_is_in_flight",
+   "review1.py::R1::test_F3b_ack_then_immediate_kill_never_loses_acknowledged_push"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 8.6s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 146,
+  "summary": "4 failed, 30 passed, 1 skipped, 1 error, 16 subtests passed in 145.36s (0:02:25)"
+ },
+ "nodurable_late": {
+  "failed": [
+   "cg2.py::CG2::test_crash_durability_and_recovery",
+   "cg2.py::CG2::test_crash_during_large_push_leaves_consistent_repo",
+   "review1.py::R1::test_F3a_kill_while_pack_body_is_in_flight",
+   "review1.py::R1::test_F3b_ack_then_immediate_kill_never_loses_acknowledged_push"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 6.8s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 155,
+  "summary": "4 failed, 30 passed, 1 skipped, 16 subtests passed in 154.87s (0:02:34)"
+ },
+ "lazydurable": {
+  "failed": [
+   "cg2.py::CG2::test_crash_durability_and_recovery",
+   "review1.py::R1::test_F3b_ack_then_immediate_kill_never_loses_acknowledged_push"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 7.7s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 162,
+  "summary": "2 failed, 32 passed, 1 skipped, 16 subtests passed in 161.59s (0:02:41)"
+ },
+ "gcnotags": {
+  "failed": [
+   "review1.py::R1::test_F10_tags_survive_maintenance_and_maintenance_concurrent_with_pushes"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 12.1s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 190,
+  "summary": "1 failed, 33 passed, 1 skipped, 16 subtests passed in 189.45s (0:03:09)"
+ },
+ "atomicignored": {
+  "failed": [
+   "review1.py::R1::test_F11_atomic_push_is_atomic_if_advertised"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 17.9s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 222,
+  "summary": "1 failed, 33 passed, 1 skipped, 16 subtests passed in 221.83s (0:03:41)"
+ },
+ "foobar500": {
+  "failed": [
+   "cg4.py::CG4::test_per_ref_monotonic_no_dangling_under_concurrent_updates"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 8.6s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 246,
+  "summary": "1 failed, 33 passed, 1 skipped, 16 subtests passed in 245.82s (0:04:05)"
+ },
+ "nogzip": {
+  "failed": [
+   "review1.py::R1::test_F12_gzip_encoded_request_bodies_are_accepted"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 7.7s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 231,
+  "summary": "1 failed, 33 passed, 1 skipped, 16 subtests passed in 230.77s (0:03:50)"
+ },
+ "trunkonlyadv": {
+  "failed": [
+   "cg1.py::CG1::test_delete_branch",
+   "cg3.py::CG3::test_chain_of_stock_pushes_every_intermediate_state_converges",
+   "cg3.py::CG3::test_concurrent_writer_and_readers_see_complete_monotonic_history",
+   "cg3.py::CG3::test_delete_recreate_unrelated_history",
+   "cg3.py::CG3::test_force_push_drops_history_others_depend_on",
+   "cg3.py::CG3::test_random_edit_workload_clones_match",
+   "cg3.py::CG3::test_retention_after_churn_and_maintenance",
+   "cg3.py::CG3::test_stacked_branches_then_delete_base_branch",
+   "cg4.py::CG4::test_independent_writers_all_succeed_and_are_visible",
+   "cg4.py::CG4::test_per_ref_monotonic_no_dangling_under_concurrent_updates",
+   "review1.py::R1::test_F4_unrelated_push_not_blocked_while_another_push_is_being_processed",
+   "review1.py::R1::test_F5_stock_client_can_update_force_and_delete_existing_non_trunk_branch"
+  ],
+  "killed": true,
+  "skipped": [],
+  "seconds": 433,
+  "summary": "13 failed, 24 passed, 1 error, 14 subtests passed in 432.08s (0:07:12)"
+ },
+ "trunkonly_overwrite": {
+  "failed": [
+   "cg1.py::CG1::test_delete_branch",
+   "cg3.py::CG3::test_delete_recreate_unrelated_history",
+   "cg3.py::CG3::test_retention_after_churn_and_maintenance",
+   "cg3.py::CG3::test_stacked_branches_then_delete_base_branch",
+   "review1.py::R1::test_F1_create_over_existing_ref_is_rejected",
+   "review1.py::R1::test_F5_stock_client_can_update_force_and_delete_existing_non_trunk_branch"
+  ],
+  "killed": true,
+  "skipped": [
+   "heavy push finished (took 8.1s) before the probe: inconclusive, increase G_HEAVY_FILES"
+  ],
+  "seconds": 223,
+  "summary": "7 failed, 29 passed, 1 skipped, 14 subtests passed in 221.52s (0:03:41)"
+ }
+}

@@ -1,0 +1,9 @@
+PASS reference push to q acknowledged (unpack ok, {'refs/heads/main': 'ok'})
+NOTE pack 99d0e83a85254d7cc69a25d926f03e8de9acdad3: 658 B, pidx 854 B
+NOTE r1: push via fe0 -> 'unpack ok' {'refs/heads/main': 'ok'}
+NOTE r1: clone fe0 rc=0; clone fe1 rc=128 err='fetch-pack: protocol error: bad band #69\nfatal: early EOF\nfatal: fetch-pack: invalid index-pack output'
+FAIL r1: a push is acknowledged only if every frontend can then serve the ref (store copy differs from what was pushed)
+NOTE r2: push via fe0 -> 'unpack ok' {'refs/heads/main': 'ok'}
+NOTE r2: clone fe0 rc=0; clone fe1 rc=128 err='fetch-pack: protocol error: bad band #69\nfatal: early EOF\nfatal: fetch-pack: invalid index-pack output'
+FAIL r2: a push is acknowledged only if every frontend can then serve the ref (store copy differs from what was pushed)
+== R03 S3 412 with differing content accepted: DEFECT REPRODUCED (2 failed checks)

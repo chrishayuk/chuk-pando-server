@@ -1,0 +1,6 @@
+NOTE push rc=1 after 10.1s, blackouts=1; client said: ['fatal: the remote end hung up unexpectedly']
+NOTE server via fe1: main=23bafead7b (pushed 23bafead7b), topic= (pushed fd45d09219)
+PASS the outage was injected between the two groups
+FAIL a ref whose commit was applied and acknowledged to the frontend is reported ok to the client
+NOTE fe0 log tail: "thread 'tokio-rt-worker' (71847033) panicked at src/meta.rs:873:50:\nmetadata service unavailable: Connection reset by peer (os error 54)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+== R22 F4: outage between the groups of a non-atomic push: DEFECT REPRODUCED (1 failed checks)

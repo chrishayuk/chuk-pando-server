@@ -1,0 +1,3 @@
+NOTE 6 rounds x 10 concurrent starts: 0 startup failures, 0 live frontends without a tmp area
+PASS no frontend lost its tmp area or failed to start because of a concurrent sweep
+== R06 shared tmp-area sweep race: no defect observed (0 failed checks)

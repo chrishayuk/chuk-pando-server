@@ -1,0 +1,18 @@
+pando (chuk-pando-server)
+Copyright 2026 the chuk-pando-server contributors
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This is an independent reproduction of the Git backend architecture ("Pando") that OpenAI described in
+"Scaling Git at OpenAI" (https://openai.com/index/scaling-git-at-openai/). It is not OpenAI's code, is not
+affiliated with or endorsed by OpenAI, and makes no claim of equivalence with OpenAI's system.
+Most of the code was written by AI coding agents (Claude, by Anthropic) under the author's direction; see
+PROVENANCE.md.
+
+It contains no code from Git. It implements Git's documented network protocols and pack format, and calls a
+user-installed `git` program as a separate process for optional recompression. Git is distributed under the GNU
+General Public License, version 2; no part of it is included in or linked into this software.
+"Git" is a trademark of the Software Freedom Conservancy; this project is not affiliated with it.
+
+Binary releases include third-party Rust crates under their own permissive licences; their licence texts are in
+THIRD-PARTY-LICENSES.txt, shipped with every release archive.

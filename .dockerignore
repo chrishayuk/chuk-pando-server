@@ -1,0 +1,7 @@
+# Build context for deploy/fly/Dockerfile: only server sources and the entrypoint are needed.
+**
+!server/Cargo.toml
+!server/Cargo.lock
+!server/src/**
+!deploy/fly/entrypoint.sh
+!verify/fault/s3relay.py

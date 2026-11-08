@@ -1,0 +1,89 @@
+{
+ "control(B0)": {
+  "failed": [],
+  "seconds": 113,
+  "summary": "24 passed, 16 subtests passed in 112.44s (0:01:52)"
+ },
+ "lostupdate": {
+  "failed": [
+   "cg1.py::CG1::test_lease_stale_rejected",
+   "cg2.py::CG2::test_same_ref_race_exactly_one_wins"
+  ],
+  "seconds": 113,
+  "summary": "3 failed, 23 passed, 14 subtests passed in 111.92s (0:01:51)"
+ },
+ "nodurable": {
+  "failed": [
+   "cg2.py::CG2::test_crash_durability_and_recovery",
+   "cg2.py::CG2::test_crash_during_large_push_leaves_consistent_repo",
+   "cg4.py::CG4::test_independent_writers_all_succeed_and_are_visible"
+  ],
+  "seconds": 105,
+  "summary": "3 failed, 21 passed, 16 subtests passed in 104.53s (0:01:44)"
+ },
+ "staleread": {
+  "failed": [
+   "cg1.py::CG1::test_delete_branch",
+   "cg2.py::CG2::test_ack_implies_visible_to_new_reader",
+   "cg2.py::CG2::test_same_ref_race_exactly_one_wins",
+   "cg3.py::CG3::test_delete_recreate_unrelated_history",
+   "cg3.py::CG3::test_force_push_drops_history_others_depend_on",
+   "cg3.py::CG3::test_retention_after_churn_and_maintenance",
+   "cg4.py::CG4::test_independent_writers_all_succeed_and_are_visible"
+  ],
+  "seconds": 74,
+  "summary": "8 failed, 18 passed, 14 subtests passed in 73.39s (0:01:13)"
+ },
+ "backwards": {
+  "failed": [
+   "cg2.py::CG2::test_ack_implies_visible_to_new_reader",
+   "cg2.py::CG2::test_same_ref_race_exactly_one_wins",
+   "cg3.py::CG3::test_concurrent_writer_and_readers_see_complete_monotonic_history",
+   "cg4.py::CG4::test_independent_writers_all_succeed_and_are_visible",
+   "cg4.py::CG4::test_per_ref_monotonic_no_dangling_under_concurrent_updates"
+  ],
+  "seconds": 76,
+  "summary": "5 failed, 19 passed, 16 subtests passed in 75.77s (0:01:15)"
+ },
+ "deleteignore": {
+  "failed": [
+   "cg1.py::CG1::test_delete_branch",
+   "cg3.py::CG3::test_delete_recreate_unrelated_history",
+   "cg3.py::CG3::test_retention_after_churn_and_maintenance",
+   "cg3.py::CG3::test_stacked_branches_then_delete_base_branch"
+  ],
+  "seconds": 82,
+  "summary": "5 failed, 21 passed, 14 subtests passed in 82.14s (0:01:22)"
+ },
+ "missingobj": {
+  "failed": [
+   "cg1.py::CG1::test_branches_and_tags",
+   "cg1.py::CG1::test_force_push_accepted",
+   "cg1.py::CG1::test_lease_stale_rejected",
+   "cg1.py::CG1::test_push_new_branch_and_clone",
+   "cg1.py::CG1::test_update_and_incremental_fetch",
+   "cg2.py::CG2::test_ack_implies_visible_to_new_reader",
+   "cg2.py::CG2::test_crash_durability_and_recovery",
+   "cg2.py::CG2::test_crash_during_large_push_leaves_consistent_repo",
+   "cg2.py::CG2::test_same_ref_race_exactly_one_wins",
+   "cg3.py::CG3::test_chain_of_stock_pushes_every_intermediate_state_converges",
+   "cg3.py::CG3::test_delete_recreate_unrelated_history",
+   "cg3.py::CG3::test_duplicate_empty_and_noop_pushes_and_tags",
+   "cg3.py::CG3::test_force_push_drops_history_others_depend_on",
+   "cg3.py::CG3::test_random_edit_workload_clones_match",
+   "cg3.py::CG3::test_retention_after_churn_and_maintenance",
+   "cg3.py::CG3::test_stacked_branches_then_delete_base_branch",
+   "cg4.py::CG4::test_independent_writers_all_succeed_and_are_visible",
+   "cg4.py::CG4::test_no_global_lock_slow_push_does_not_block_other_branch"
+  ],
+  "seconds": 55,
+  "summary": "23 failed, 11 passed, 9 warnings, 6 subtests passed in 54.55s"
+ },
+ "globallock": {
+  "failed": [
+   "cg4.py::CG4::test_no_global_lock_slow_push_does_not_block_other_branch"
+  ],
+  "seconds": 106,
+  "summary": "1 failed, 23 passed, 16 subtests passed in 105.69s (0:01:45)"
+ }
+}

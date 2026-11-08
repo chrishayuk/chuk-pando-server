@@ -1,0 +1,24 @@
+NOTE kills: ['meta', 'minio', 'fe', 'meta', 'minio', 'fe', 'meta', 'minio', 'fe']; acked pushes per ref: {'refs/heads/p4': 122, 'refs/heads/p0': 123, 'refs/heads/p3': 122, 'refs/heads/p2': 122, 'refs/heads/p1': 123, 'refs/heads/p5': 121}
+PASS refs/heads/p4: server at aaf8fdeedb, last acked aaf8fdeedb
+PASS refs/heads/p0: server at 80a63e04dd, last acked 80a63e04dd
+PASS refs/heads/p3: server at e5bd7a463b, last acked e5bd7a463b
+PASS refs/heads/p2: server at c09e2299f0, last acked c09e2299f0
+PASS refs/heads/p1: server at 6593238846, last acked 6593238846
+PASS refs/heads/p5: server at cae57ca105, last acked cae57ca105
+PASS mirror clone from fe0: 
+PASS fsck of clone from fe0 
+PASS fe0 clone has acked refs/heads/p4@aaf8fdeedb
+PASS fe0 clone has acked refs/heads/p0@80a63e04dd
+PASS fe0 clone has acked refs/heads/p3@e5bd7a463b
+PASS fe0 clone has acked refs/heads/p2@c09e2299f0
+PASS fe0 clone has acked refs/heads/p1@6593238846
+PASS fe0 clone has acked refs/heads/p5@cae57ca105
+PASS mirror clone from fe1: 
+PASS fsck of clone from fe1 
+PASS fe1 clone has acked refs/heads/p4@aaf8fdeedb
+PASS fe1 clone has acked refs/heads/p0@80a63e04dd
+PASS fe1 clone has acked refs/heads/p3@e5bd7a463b
+PASS fe1 clone has acked refs/heads/p2@c09e2299f0
+PASS fe1 clone has acked refs/heads/p1@6593238846
+PASS fe1 clone has acked refs/heads/p5@cae57ca105
+== R07 kill storm (tcp-s3): no defect observed (0 failed checks)

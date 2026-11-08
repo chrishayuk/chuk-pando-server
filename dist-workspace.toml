@@ -1,0 +1,22 @@
+# cargo-dist release configuration (docs/RELEASE-PLAN.md, docs/RELEASING.md). Nothing is published or tagged
+# until the owner approves the release checkpoint.
+[workspace]
+members = ["cargo:server"]
+
+[dist]
+cargo-dist-version = "0.34.0"
+ci = "github"
+installers = ["shell", "powershell"]
+targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
+install-path = "~/.pando/bin"
+install-updater = false          # no self-updater in 0.1.0; a signed `pando update` is deferred (RELEASE-PLAN.md section 6)
+github-attestations = true
+pr-run-mode = "plan"
+# .github/workflows/release.yml carries two hand edits dist must keep: the installer hardening step and --draft
+# (docs/RELEASING.md). Re-check both after any `dist generate`.
+allow-dirty = ["ci"]
+# No source.tar.gz release asset: it is the whole git tree, including the frozen audit archive's raw agent
+# transcripts, which the public source omits (docs/PUBLIC-SOURCE.md).
+source-tarball = false
+# shipped in every archive next to the binary (docs/PROVENANCE-REVIEW.md)
+include = ["NOTICE", "THIRD-PARTY-LICENSES.txt"]   # LICENSE and README.md are added by dist itself

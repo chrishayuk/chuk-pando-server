@@ -1,0 +1,10 @@
+NOTE P1=bb1ef67c310a378a3c648c720745055694616281 P2=4a26ee5f41732d5d55fa9aa7c6ac2941f5e6ad03; genuine P2 index names external bases [('64780c47', 'bb1ef67c')]
+NOTE ta: push of thin P2 via fe0 -> 'unpack ok' {'refs/heads/main': 'ok'}
+NOTE ta: full clone via fe0 rc=0; full clone via cold fe1 rc=0 (full clones splice the thin pack raw; the client resolves the base)
+NOTE ta: shallow clone via fe0 rc=0; via cold fe1 rc=128 err='fatal: remote error: pack ffffffffffffffffffffffffffffffffffffffff is missing from the object store'
+FAIL ta: a push is acknowledged only if every frontend can serve it
+NOTE tb: push of thin P2 via fe0 -> 'unpack ok' {'refs/heads/main': 'ok'}
+NOTE tb: full clone via fe0 rc=0; full clone via cold fe1 rc=0 (full clones splice the thin pack raw; the client resolves the base)
+NOTE tb: shallow clone via fe0 rc=0; via cold fe1 rc=128 err='fatal: remote error: object store GET repos/tb/packs/../../s/packs/bb1ef67c310a378a3c648c720745055694616281.pidx -> 400'
+FAIL tb: a push is acknowledged only if every frontend can serve it
+== R20 F2: 412 accepts an index whose external-base pack is unusable: DEFECT REPRODUCED (2 failed checks)

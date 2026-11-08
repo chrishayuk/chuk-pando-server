@@ -1,0 +1,5 @@
+NOTE uri clone rc=0 ''
+NOTE reader pack dir: pack-029d08823bd8a8eab510ad6ac75c823cfd3ed31e.idx(0o444), pack-029d08823bd8a8eab510ad6ac75c823cfd3ed31e.pack(0o444), pack-029d08823bd8a8eab510ad6ac75c823cfd3ed31e.rev(0o444), pack-05251acb0916d01f38ee815da8fcd450a74443eb.idx(0o444), pack-05251acb0916d01f38ee815da8fcd450a74443eb.pack(0o444), pack-05251acb0916d01f38ee815da8fcd450a74443eb.rev(0o444), pack-70141b9c07ef00f84056790eadb8ebf2c81e3aa4.idx(0o444), pack-70141b9c07ef00f84056790eadb8ebf2c81e3aa4.pack(0o444), pack-70141b9c07ef00f84056790eadb8ebf2c81e3aa4.rev(0o444), pack-f9a254ad5b8c220772be7ef2a9f23491557a6fb5.idx(0o444), pack-f9a254ad5b8c220772be7ef2a9f23491557a6fb5.pack(0o444), pack-f9a254ad5b8c220772be7ef2a9f23491557a6fb5.rev(0o444)
+PASS fsck after packfile-URI clone 
+PASS control: fsck after inline clone 
+== R12 packfile-URI fetch + fsck: no defect observed (0 failed checks)

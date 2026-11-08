@@ -1,0 +1,25 @@
+# Git frontends: 2 Machines, public HTTPS via the Fly edge (TLS terminated by Fly), access control in the server.
+# Secrets (fly secrets set -a pando-git ...): PANDO_AUTH, PANDO_URI_SECRET, PANDO_META_SECRET, PANDO_S3_KEY, PANDO_S3_SECRET.
+app = "pando-git"
+primary_region = "lhr"
+
+[build]
+  dockerfile = "Dockerfile"   # relative to this file (fly resolves it from the config directory)
+
+[env]
+  PANDO_ROLE = "frontend"
+  PANDO_META = "tcp:pando-meta.internal:7000"
+  PANDO_PUBLIC_URL = "https://pando-git.fly.dev"
+  PANDO_S3_REGION = "auto"
+  # PANDO_S3 = "https://fly.storage.tigris.dev/<bucket>"   (set at deploy time)
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = false
+  min_machines_running = 2
+
+[[vm]]
+  size = "shared-cpu-2x"
+  memory = "1gb"

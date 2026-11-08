@@ -1,0 +1,17 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ P1Copies.test_sigkill_with_copies_pending_rebuilds_them_on_restart ______
+test_p1.py:175: in test_sigkill_with_copies_pending_rebuilds_them_on_restart
+    ev, writes = self._uri_fetch(url, w, tip, f"r{i}")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test_p1.py:136: in _uri_fetch
+    ok, err = fsck_ok(d); self.assertTrue(ok, f"{name}: {err}")
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: False is not true : r0: pack-099bf0a5c31177737df37c1912f84fde9d07066f.pack'
+E   error: unable to load rev-index for pack '.git/objects/pack/pack-daac3d5869d53194128d39ba14e28cae70b1574b.pack'
+E   error: unable to load rev-index for pack '.git/objects/pack/pack-66d62c7706c337dcdae4af6aee1cf7606b99e074.pack'
+E   error: unable to load rev-index for pack '.git/objects/pack/pack-e8f1caf5f049484d9e2f049e5db332e42ba594bc.pack'
+E   error: unable to load rev-index for pack '.git/objects/pack/pack-1fb01718c46745adea26791542ef32d535ef9951.pack'
+=========================== short test summary info ============================
+FAILED test_p1.py::P1Copies::test_sigkill_with_copies_pending_rebuilds_them_on_restart
+1 failed, 4 deselected in 1.68s

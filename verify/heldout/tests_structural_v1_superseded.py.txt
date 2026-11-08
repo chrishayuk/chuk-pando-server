@@ -1,0 +1,59 @@
+"""CG3-S structural checks: architecture claims that need introspection. Expected to FAIL for stock-Git baselines by design
+(they prove the suite discriminates architecture, not just behaviour). Hidden. Self-reported /_stats is audited in CG7."""
+import hashlib, os, re
+from harness.lib import *
+
+HEX38 = re.compile(r"^[0-9a-f]{38}$")
+
+
+def walk(d):
+    for r, ds, fs in os.walk(d):
+        yield r, ds, fs
+
+
+def pack_files(d):
+    out = {}
+    for r, _, fs in walk(d):
+        for f in fs:
+            p = os.path.join(r, f)
+            try:
+                with open(p, "rb") as fh:
+                    if fh.read(4) == b"PACK": out[hashlib.sha256(open(p, "rb").read()).hexdigest()] = p
+            except OSError: pass
+    return out
+
+
+class Structural(SrvCase):
+    def _pushes(self, url, n, size=1000):
+        w = self.work(); w.commit("a.txt", "x\n")
+        for i in range(n): w.commit("f.txt", os.urandom(size).hex()); w.push(url, "main" if i == 0 and False else "main") if i else w.push(url, "main")
+        return w
+
+    def test_S1_no_serverside_unpack_into_repository(self):
+        url = self.repo(); self._pushes(url, 5)
+        loose, bare = [], []
+        for r, ds, fs in walk(self.srv.data):
+            if os.path.basename(os.path.dirname(r)) == "objects" or re.search(r"/objects/[0-9a-f]{2}$", r):
+                loose += [os.path.join(r, f) for f in fs if HEX38.match(f)]
+            if {"objects", "refs"} <= set(ds) and "HEAD" in fs: bare.append(r)
+        self.assertEqual(loose, [], f"server unpacked pushed objects as loose objects (e.g. {loose[:2]})")
+        self.assertEqual(bare, [], f"server keeps a conventional bare repository at {bare[:2]}")
+
+    def test_S2_pushed_packs_stored_immutably_and_retained(self):
+        url = self.repo(); w = self._pushes(url, 4); before = pack_files(self.srv.data)
+        self.assertGreaterEqual(len(before), 4, f"expected >= 1 stored pack per push, found {len(before)}")
+        self.assertGreaterEqual(self.srv.stats().get("packs_stored", 0), 4)
+        for _ in range(6): w.commit("g.txt", "more\n"); w.push(url, "main")
+        self.srv.maintain(); after = pack_files(self.srv.data)
+        missing = set(before) - set(after); self.assertEqual(missing, set(), "previously stored packs were rewritten or discarded")
+
+    def test_S3_metadata_operations_per_push_independent_of_push_size(self):
+        url = self.repo(); w = self.work(); w.commit(); w.push(url, "main"); costs = []
+        for size in (1_000, 1_000_000, 30_000_000):
+            s0 = self.srv.stats()
+            with open(os.path.join(w.dir, f"blob{size}.bin"), "wb") as f: f.write(os.urandom(size))
+            w.git("add", "-A"); w.git("commit", "-q", "-m", f"blob{size}")
+            w.push(url, "main"); s1 = self.srv.stats()
+            costs.append((s1["metadata_reads"] - s0["metadata_reads"]) + (s1["metadata_writes"] - s0["metadata_writes"]))
+        self.assertTrue(all(c > 0 for c in costs), f"no metadata ops reported ({costs}): not instrumented")
+        self.assertLessEqual(max(costs) - min(costs), 2, f"metadata ops vary with push size: {costs}")

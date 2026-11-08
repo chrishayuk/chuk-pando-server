@@ -1,0 +1,17 @@
+control(B0) -> 24 passed, 16 subtests passed in 112.44s (0:01:52)
+lostupdate -> 3 failed, 23 passed, 14 subtests passed in 111.92s (0:01:51)
+nodurable -> 3 failed, 21 passed, 16 subtests passed in 104.53s (0:01:44)
+staleread -> 8 failed, 18 passed, 14 subtests passed in 73.39s (0:01:13)
+backwards -> 5 failed, 19 passed, 16 subtests passed in 75.77s (0:01:15)
+deleteignore -> 5 failed, 21 passed, 14 subtests passed in 82.14s (0:01:22)
+missingobj -> 23 failed, 11 passed, 9 warnings, 6 subtests passed in 54.55s
+globallock -> 1 failed, 23 passed, 16 subtests passed in 105.69s (0:01:45)
+control failures: []
+lostupdate    KILLED by 2 tests
+nodurable     KILLED by 3 tests
+staleread     KILLED by 7 tests
+backwards     KILLED by 5 tests
+deleteignore  KILLED by 4 tests
+missingobj    KILLED by 18 tests
+globallock    KILLED by 1 tests
+finished

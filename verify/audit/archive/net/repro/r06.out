@@ -1,0 +1,13 @@
+NOTE round 0: live frontend pid 16458 has no tmp area
+NOTE   push through it: rc=1 '067000": No such file or directory (os error 2)\nTo http://127.0.0.1:64000/r.git\n ! [remote rejected] HEAD -> x0-16458 (unpacker error)\nerror: failed to push some refs to \'http://127.0.0.1:64000/r.git\''
+NOTE round 5: live frontend pid 17132 has no tmp area
+NOTE   push through it: rc=1 '542000": No such file or directory (os error 2)\nTo http://127.0.0.1:64344/r.git\n ! [remote rejected] HEAD -> x5-17132 (unpacker error)\nerror: failed to push some refs to \'http://127.0.0.1:64344/r.git\''
+NOTE round 5: startup errors ['run.sh (\'start\',): pando: server exited during startup: exit status: 1 (see "/private/tmp/claude-501/r06-rkgeclhd/r5fe2/server.log")\n']
+NOTE   failed frontend log: pando: No such file or directory (os error 2)
+NOTE round 6: live frontend pid 17314 has no tmp area
+NOTE   push through it: rc=1 '500000": No such file or directory (os error 2)\nTo http://127.0.0.1:64415/r.git\n ! [remote rejected] HEAD -> x6-17314 (unpacker error)\nerror: failed to push some refs to \'http://127.0.0.1:64415/r.git\''
+NOTE round 8: live frontend pid 17581 has no tmp area
+NOTE   push through it: rc=1 '098000": No such file or directory (os error 2)\nTo http://127.0.0.1:64556/r.git\n ! [remote rejected] HEAD -> x8-17581 (unpacker error)\nerror: failed to push some refs to \'http://127.0.0.1:64556/r.git\''
+NOTE 10 rounds x 10 concurrent starts: 1 startup failures, 4 live frontends without a tmp area
+FAIL no frontend lost its tmp area or failed to start because of a concurrent sweep
+== R06 shared tmp-area sweep race: DEFECT REPRODUCED (1 failed checks)

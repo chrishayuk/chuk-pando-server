@@ -1,0 +1,9 @@
+PASS reference push to q acknowledged (unpack ok, {'refs/heads/main': 'ok'})
+NOTE pack a3d0f5cfb9cffac61998a37c5b9cee4adbbc17b4: 659 B, pidx 854 B
+NOTE r1: push via fe0 -> 'unpack storage error: stored object repos/r1/packs/a3d0f5cfb9cffac61998a37c5b9cee4adbbc17b4.pidx differs from ours (not a valid index: bad pidx header): refusing to proceed' {'refs/heads/main': 'ng unpacker error'}
+NOTE r1: clone fe0 rc=0; clone fe1 rc=0 err='warning: You appear to have cloned an empty repository.'
+PASS r1: a push is acknowledged only if every frontend can then serve the ref (store copy differs from what was pushed)
+NOTE r2: push via fe0 -> 'unpack storage error: stored object repos/r2/packs/a3d0f5cfb9cffac61998a37c5b9cee4adbbc17b4.pack differs from ours (659 vs 659 bytes, content differs): refusing to proceed' {'refs/heads/main': 'ng unpacker error'}
+NOTE r2: clone fe0 rc=0; clone fe1 rc=0 err='warning: You appear to have cloned an empty repository.'
+PASS r2: a push is acknowledged only if every frontend can then serve the ref (store copy differs from what was pushed)
+== R03 S3 412 with differing content accepted: no defect observed (0 failed checks)

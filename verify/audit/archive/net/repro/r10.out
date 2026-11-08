@@ -1,0 +1,5 @@
+NOTE 116 acknowledged, 578 rejected/failed
+PASS no two acknowledged updates from the same old tip (0 duplicates)
+PASS every acknowledged tip is an ancestor of the final tip (0 lost)
+PASS clone fsck 
+== R10 same-ref CAS across frontends: no defect observed (0 failed checks)

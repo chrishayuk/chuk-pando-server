@@ -1,0 +1,4 @@
+NOTE {'slow': (3.13, 'ok'), 'same-tip-other-ref': (2.52, 'ok'), 'control-different-tip': (0.02, 'ok')}
+PASS control: unrelated ref with its own tip is not delayed
+FAIL a push to a different ref is not delayed by a stalled commit on another ref (A4)
+== R11 A4: unrelated refs contend on shared tip/pack keys: DEFECT REPRODUCED (1 failed checks)

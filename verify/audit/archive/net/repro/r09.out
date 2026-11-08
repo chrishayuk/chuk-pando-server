@@ -1,0 +1,8 @@
+run 0: {'fastA': (0.05, 'ok'), 'fastB': (0.03, 'ok'), 'slow': (3.05, 'ok'), 'rival': (5.45, "ng cannot lock ref 'refs/heads/slow': reference already exists")}
+run 1: {'fastA': (0.05, 'ok'), 'fastB': (0.03, 'ok'), 'slow': (3.04, 'ok'), 'rival': (5.44, "ng cannot lock ref 'refs/heads/slow': reference already exists")}
+run 2: {'fastA': (0.04, 'ok'), 'fastB': (0.03, 'ok'), 'slow': (3.04, 'ok'), 'rival': (5.44, "ng cannot lock ref 'refs/heads/slow': reference already exists")}
+run 3: {'fastA': (0.05, 'ok'), 'fastB': (0.03, 'ok'), 'slow': (3.04, 'ok'), 'rival': (5.43, "ng cannot lock ref 'refs/heads/slow': reference already exists")}
+run 4: {'fastA': (0.05, 'ok'), 'fastB': (0.03, 'ok'), 'slow': (3.04, 'ok'), 'rival': (5.44, "ng cannot lock ref 'refs/heads/slow': reference already exists")}
+run 5: {'fastA': (0.05, 'ok'), 'fastB': (0.03, 'ok'), 'slow': (3.03, 'ok'), 'rival': (5.43, "ng cannot lock ref 'refs/heads/slow': reference already exists")}
+PASS 0/6 runs: a push to an unrelated branch waited > 1.5 s for another branch's stalled commit
+== R09 unrelated push waits for stalled commit (tcp-s3): no defect observed (0 failed checks)

@@ -1,0 +1,10 @@
+NOTE (a) push with store down: rc=1 after 10.4s: "attempt 16)\nTo http://127.0.0.1:62068/r.git\n ! [remote rejected] main -> main (unpacker error)\nerror: failed to push some refs to 'http://127.0.0.1:62068/r.git'"
+PASS (a) not acknowledged and ref not moved while the store is down
+PASS (a) same push succeeds after the store returns
+PASS (a) clone from fe1 is complete 
+NOTE (b) push with store stalled returned rc=1 after 120.0s
+FAIL (b) a stalled object store makes a push fail within ~60 s (took 120 s)
+NOTE (c) ls-remote with metadata service stalled: rc=timeout after 45.0s
+FAIL (c) a stalled metadata service makes requests fail rather than hang (>45 s)
+PASS (c) frontend recovers after the stall
+== R05 store outage / stalls: DEFECT REPRODUCED (2 failed checks)

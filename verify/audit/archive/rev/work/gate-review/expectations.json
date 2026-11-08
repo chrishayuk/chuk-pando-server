@@ -1,0 +1,236 @@
+{
+ "comment": "Regression gate expectations (verify/gate/gate.py). Generated from the per-test records of 20261107T164433Z-gate-baseline-8a89136 (server 8a89136), then annotated: every known failure has a reason and a reference, every allowed skip a reason. Adding a test means adding it here (run the gate with --strict to list unregistered tests); removing one from 'required' needs a recorded reason. 2026-11-07: 15 tests added for the re-audit remediation and the 'repro' suite (the auditor's 13 reproducers, archived unmodified), from the records of 20261107T174330Z-remediate-4c4edc6; additions only.",
+ "suites": {
+  "hidden": {
+   "file": "hidden.xml",
+   "required": [
+    "heldout.tests_cg1.CG1::test_branches_and_tags",
+    "heldout.tests_cg1.CG1::test_clone_empty",
+    "heldout.tests_cg1.CG1::test_delete_branch",
+    "heldout.tests_cg1.CG1::test_force_push_accepted",
+    "heldout.tests_cg1.CG1::test_large_push_and_many_files",
+    "heldout.tests_cg1.CG1::test_lease_stale_rejected",
+    "heldout.tests_cg1.CG1::test_push_new_branch_and_clone",
+    "heldout.tests_cg1.CG1::test_update_and_incremental_fetch",
+    "heldout.tests_cg1.CG1Matrix::test_matrix",
+    "heldout.tests_cg2.CG2::test_ack_implies_visible_to_new_reader",
+    "heldout.tests_cg2.CG2::test_crash_durability_and_recovery",
+    "heldout.tests_cg2.CG2::test_crash_during_large_push_leaves_consistent_repo",
+    "heldout.tests_cg2.CG2::test_same_ref_race_exactly_one_wins",
+    "heldout.tests_cg3.CG3::test_chain_of_stock_pushes_every_intermediate_state_converges",
+    "heldout.tests_cg3.CG3::test_concurrent_writer_and_readers_see_complete_monotonic_history",
+    "heldout.tests_cg3.CG3::test_delete_recreate_unrelated_history",
+    "heldout.tests_cg3.CG3::test_duplicate_empty_and_noop_pushes_and_tags",
+    "heldout.tests_cg3.CG3::test_force_push_drops_history_others_depend_on",
+    "heldout.tests_cg3.CG3::test_random_edit_workload_clones_match",
+    "heldout.tests_cg3.CG3::test_retention_after_churn_and_maintenance",
+    "heldout.tests_cg3.CG3::test_stacked_branches_then_delete_base_branch",
+    "heldout.tests_cg4.CG4::test_independent_writers_all_succeed_and_are_visible",
+    "heldout.tests_cg4.CG4::test_no_global_lock_slow_push_does_not_block_other_branch",
+    "heldout.tests_cg4.CG4::test_per_ref_monotonic_no_dangling_under_concurrent_updates",
+    "heldout.tests_review1.R1::test_F10_tags_survive_maintenance_and_maintenance_concurrent_with_pushes",
+    "heldout.tests_review1.R1::test_F11_atomic_push_is_atomic_if_advertised",
+    "heldout.tests_review1.R1::test_F12_gzip_encoded_request_bodies_are_accepted",
+    "heldout.tests_review1.R1::test_F1_cas_holds_on_non_main_refs_and_races_on_branch",
+    "heldout.tests_review1.R1::test_F1_create_over_existing_ref_is_rejected",
+    "heldout.tests_review1.R1::test_F1_delete_with_wrong_old_rejected",
+    "heldout.tests_review1.R1::test_F26_clients_with_packfile_uris_enabled_still_work",
+    "heldout.tests_review1.R1::test_F3a_kill_while_pack_body_is_in_flight",
+    "heldout.tests_review1.R1::test_F3b_ack_then_immediate_kill_never_loses_acknowledged_push",
+    "heldout.tests_review1.R1::test_F4_unrelated_push_not_blocked_while_another_push_is_being_processed",
+    "heldout.tests_review1.R1::test_F5_stock_client_can_update_force_and_delete_existing_non_trunk_branch"
+   ],
+   "min_total": 34,
+   "known_fail": {
+    "heldout.tests_cg3.CG3::test_concurrent_writer_and_readers_see_complete_monotonic_history": {
+     "reason": "test precondition race: readers fetch branch t before the writer has created it (cause established by an independent reviewer; no correctness violation)",
+     "ref": "chuk-pando review/CG3-ADJUDICATION.md"
+    }
+   },
+   "allowed_skip": {
+    "heldout.tests_review1.R1::test_F4_unrelated_push_not_blocked_while_another_push_is_being_processed": "inconclusive by construction against a streaming server: ingest happens while the body arrives, so the heavy push completes before the post-arrival probe; the property is tested by verify/dist D2NoGlobalLock and D2StalledCommit"
+   }
+  },
+  "cg56": {
+   "file": "cg56.xml",
+   "required": [
+    "tests_cg5.CG5::test_cg5_fork_interop_push_update_delete_lease_fetch",
+    "tests_cg5.CG5::test_cg5_push_pack_built_against_trunk_only",
+    "tests_cg5.CG5::test_cg5_server_verifies_pack_completes_branch",
+    "tests_cg5.CG5::test_cg5_stale_advertised_tip_rejected",
+    "tests_cg5.CG5::test_cg5_stock_clients_on_refs_written_with_explicit_haves",
+    "tests_cg5.CG5::test_cg5_trunk_only_pack_reused_by_readers",
+    "tests_cg5.CG5::test_cg5_trunk_relative_pack_depends_on_trunk_version",
+    "tests_cg6.CG6::test_cg6_async_commit_subset_survives_crash",
+    "tests_cg6.CG6::test_cg6_compaction_levels_reduce_packs_per_clone",
+    "tests_cg6.CG6::test_cg6_every_ref_version_complete_after_maintain",
+    "tests_cg6.CG6::test_cg6_maintain_concurrent_with_pushes",
+    "tests_cg6.CG6::test_cg6_packfile_reuse_across_readers",
+    "tests_cg6.CG6::test_cg6_parallel_pack_download",
+    "tests_cg6.CG6::test_cg6_planning_reads_and_pack_count_vs_delta",
+    "tests_cg6.CG6::test_cg6_pushed_packs_byte_identical_after_maintain",
+    "tests_cg6.CG6::test_cg6_sigkill_during_maintain",
+    "tests_cg6.CG6::test_cg6_uri_and_non_uri_clients"
+   ],
+   "min_total": 17,
+   "known_fail": {
+    "tests_cg6.CG6::test_cg6_compaction_levels_reduce_packs_per_clone": {
+     "reason": "asserts maintain itself adds cover packs; covers are already built in the background, and INTERFACE.md allows maintain to be a no-op",
+     "ref": "chuk-pando campaign/eval/CG5-CG6-SCORING.md note 1"
+    },
+    "tests_cg6.CG6::test_cg6_parallel_pack_download": {
+     "reason": "oracle unresolved: fails with the default single-job fork client everywhere, including the suite author's fake; the 'par' suite runs it as the fork's docs require (packfileUriJobs=4)",
+     "ref": "chuk-pando campaign/eval/CG5-CG6-SCORING.md (owner decision 4); suite 'par'"
+    }
+   }
+  },
+  "par": {
+   "file": "par.xml",
+   "required": [
+    "tests_cg6.CG6::test_cg6_parallel_pack_download"
+   ],
+   "min_total": 1
+  },
+  "unit": {
+   "file": "unit.txt",
+   "format": "cargo",
+   "required": [
+    "auth::tests::base64_roundtrip_and_rfc4648_vectors",
+    "auth::tests::signed_uris_verify_and_reject_tampering_and_expiry",
+    "blob::tests::concurrent_shared_starts_never_sweep_a_live_area",
+    "blob::tests::install_never_replaces_existing_index",
+    "blob::tests::install_twice_keeps_first_copy",
+    "compact::tests::concurrent_copy_builds_publish_one_copy",
+    "meta::tests::held_commit_is_not_skipped_by_the_high_water_mark",
+    "meta::tests::lsn_never_regresses_across_checkpoint_after_deletes",
+    "meta::tests::mark_survives_reopen",
+    "meta::tests::randomised_out_of_order_application_misses_nothing",
+    "meta::tests::unrelated_key_is_not_delayed_by_a_held_commit_even_on_an_old_stripe_collision",
+    "pack::tests::index_equivalence_accepts_only_a_different_base_pack",
+    "recompress::tests::parses_tree_entries",
+    "s3::tests::dates",
+    "s3::tests::hmac_rfc4231_case2",
+    "s3::tests::sha256_vectors",
+    "s3::tests::sigv4_aws_example_get_object"
+   ],
+   "min_total": 17
+  },
+  "p0": {
+   "file": "p0.xml",
+   "required": [
+    "test_p0.P0::test_identical_repush_after_rejection_concurrent_with_maintain_survives_restart",
+    "test_p0.P0::test_many_packs_under_low_soft_fd_limit_restart",
+    "test_p0.P0::test_non_commit_object_on_branch_rejected",
+    "test_p0.P0::test_published_packs_are_readonly_and_never_replaced"
+   ],
+   "min_total": 4
+  },
+  "p1": {
+   "file": "p1.xml",
+   "required": [
+    "test_p1.P1::test_clone_after_force_push_receives_no_discarded_history",
+    "test_p1.P1Copies::test_sigkill_with_copies_pending_rebuilds_them_on_restart",
+    "test_p1.P1Copies::test_thin_push_fetchable_before_copy_then_served_by_uri",
+    "test_p1.P1Covers::test_clone_from_empty_uses_top_cover",
+    "test_p1.P1Recompress::test_sigkill_during_recompression_leaves_no_workspace_and_no_partial_cover"
+   ],
+   "min_total": 5
+  },
+  "dist": {
+   "file": "dist.xml",
+   "required": [
+    "test_dist.D10LostCommitReply::test_lost_reply_is_resolved_and_a_dropped_request_is_not_reported_ok",
+    "test_dist.D1SameRefCAS::test_racing_writers_on_one_branch_through_two_frontends",
+    "test_dist.D2KeyLocks::test_push_to_a_formerly_colliding_branch_does_not_wait_for_a_stalled_commit",
+    "test_dist.D2NoGlobalLock::test_distinct_branches_progress_concurrently",
+    "test_dist.D2StalledCommit::test_unrelated_branches_do_not_wait_for_a_stalled_commit",
+    "test_dist.D3D4Visibility::test_ack_on_one_frontend_visible_and_complete_on_the_other",
+    "test_dist.D3D4Visibility::test_pack_introducing_two_refs_then_dependent_push_through_other_frontend",
+    "test_dist.D5D6Crash::test_live_frontend_area_never_swept",
+    "test_dist.D5D6Crash::test_sigkill_frontend_during_pushes_other_continues",
+    "test_dist.D7Invalidation::test_thin_push_on_other_frontend_and_covers_built_by_one_served_by_other",
+    "test_dist.D8Restart::test_metadata_service_and_frontends_restart_in_any_order",
+    "test_dist.D8Restart::test_no_ack_while_metadata_service_down",
+    "test_dist.D9BackgroundRecovery::test_failed_background_jobs_are_retried_until_done",
+    "test_dist.I3ConcurrentMaintenance::test_thin_pushes_across_frontends_during_maintenance"
+   ],
+   "min_total": 14
+  },
+  "dist-tcp-s3": {
+   "file": "dist-tcp-s3.xml",
+   "required": [
+    "test_dist.D10LostCommitReply::test_lost_reply_is_resolved_and_a_dropped_request_is_not_reported_ok",
+    "test_dist.D1SameRefCAS::test_racing_writers_on_one_branch_through_two_frontends",
+    "test_dist.D2KeyLocks::test_push_to_a_formerly_colliding_branch_does_not_wait_for_a_stalled_commit",
+    "test_dist.D2NoGlobalLock::test_distinct_branches_progress_concurrently",
+    "test_dist.D2StalledCommit::test_unrelated_branches_do_not_wait_for_a_stalled_commit",
+    "test_dist.D3D4Visibility::test_ack_on_one_frontend_visible_and_complete_on_the_other",
+    "test_dist.D3D4Visibility::test_pack_introducing_two_refs_then_dependent_push_through_other_frontend",
+    "test_dist.D5D6Crash::test_live_frontend_area_never_swept",
+    "test_dist.D5D6Crash::test_sigkill_frontend_during_pushes_other_continues",
+    "test_dist.D7Invalidation::test_thin_push_on_other_frontend_and_covers_built_by_one_served_by_other",
+    "test_dist.D8Restart::test_metadata_service_and_frontends_restart_in_any_order",
+    "test_dist.D8Restart::test_no_ack_while_metadata_service_down",
+    "test_dist.D9BackgroundRecovery::test_failed_background_jobs_are_retried_until_done",
+    "test_dist.I3ConcurrentMaintenance::test_thin_pushes_across_frontends_during_maintenance"
+   ],
+   "min_total": 13,
+   "allowed_skip": {
+    "test_dist.D5D6Crash::test_live_frontend_area_never_swept": "S3 mode has no shared tmp directory (each frontend's cache is private): the property does not apply"
+   }
+  },
+  "net": {
+   "file": "net.xml",
+   "required": [
+    "test_net.N2CreateOnly::test_object_overwritten_behind_our_back_is_detected_not_served",
+    "test_net.N2CreateOnly::test_same_pack_published_concurrently_by_two_frontends",
+    "test_net.N3Completeness::test_abort_between_pack_and_index_upload",
+    "test_net.N4StoreDown::test_object_store_unavailable",
+    "test_net.N5ColdCache::test_new_frontend_with_empty_cache_serves_history",
+    "test_net.N5RestartEmptiesCache::test_restart_starts_with_empty_cache_and_serves_from_store",
+    "test_net.N6PublishVerification::test_corrupt_substitution_map_in_the_store_is_rejected_not_used",
+    "test_net.N6PublishVerification::test_equivalent_index_naming_another_pack_holding_the_base_is_accepted_else_refused",
+    "test_net.N6PublishVerification::test_valid_but_different_index_at_the_key_refuses_the_push",
+    "test_net.N6PublishVerification::test_valid_but_different_substitution_map_at_the_key_is_accepted",
+    "test_net.N7ErrorReporting::test_error_inside_the_pack_stream_reaches_the_client_as_a_message"
+   ],
+   "min_total": 11
+  },
+  "fly": {
+   "file": "fly.xml",
+   "required": [
+    "test_access.Access::test_authenticated_push_and_fetch_with_signed_uris_stock_and_fork",
+    "test_access.Access::test_unauthenticated_requests_are_refused",
+    "test_access.Access::test_uri_signatures_bind_path_and_expiry",
+    "test_access.MetaHandshake::test_frontend_with_wrong_or_missing_secret_cannot_use_the_metadata_service",
+    "test_access.UriExpiry::test_expired_uri_refused"
+   ],
+   "min_total": 5
+  },
+  "repro": {
+   "file": "repro.xml",
+   "required": [
+    "audit_repro::r01",
+    "audit_repro::r02",
+    "audit_repro::r03",
+    "audit_repro::r04",
+    "audit_repro::r05",
+    "audit_repro::r06",
+    "audit_repro::r07",
+    "audit_repro::r08",
+    "audit_repro::r09",
+    "audit_repro::r10",
+    "audit_repro::r11",
+    "audit_repro::r12",
+    "audit_repro::r12b"
+   ],
+   "min_total": 13,
+   "known_fail": {
+    "audit_repro::r11": {
+     "reason": "audit F13, kept as a documented A4 deviation: pushes to different refs that set the same tip or carry the same pack share genuinely shared write-once keys (tip/<oid>, pack/<id>) and so contend; correctness preserved",
+     "ref": "docs/AUDIT-NET-REMEDIATION.md (F13)"
+    }
+   }
+  }
+ }
+}

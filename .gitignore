@@ -1,0 +1,6 @@
+target/
+.cargo-home
+__pycache__/
+*.pyc
+.tmp/
+.worktrees/

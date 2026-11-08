@@ -1,0 +1,4 @@
+PASS sequential create-only: 200, 412
+NOTE concurrent create-only outcomes (A,B): {('200', '412'): 34, ('412', '200'): 6}
+PASS no round where both concurrent create-only PUTs returned 200 (0/40)
+== R04 MinIO If-None-Match semantics: no defect observed (0 failed checks)

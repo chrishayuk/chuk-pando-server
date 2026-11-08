@@ -1,0 +1,8 @@
+base1 start 17:37  up 2 days, 21:01, 1 user, load averages: 1.57 3.71 10.11
+base1 end 17:38  up 2 days, 21:01, 1 user, load averages: 1.47 3.48 9.80 rc=0
+fix1 start 17:38  up 2 days, 21:01, 1 user, load averages: 1.47 3.48 9.80
+fix1 end 17:38  up 2 days, 21:02, 1 user, load averages: 3.80 3.90 9.77 rc=0
+base2 start 17:38  up 2 days, 21:02, 1 user, load averages: 3.80 3.90 9.77
+base2 end 17:39  up 2 days, 21:02, 1 user, load averages: 4.84 4.10 9.67 rc=0
+fix2 start 17:39  up 2 days, 21:02, 1 user, load averages: 4.84 4.10 9.67
+fix2 end 17:39  up 2 days, 21:03, 1 user, load averages: 6.09 4.44 9.63 rc=0

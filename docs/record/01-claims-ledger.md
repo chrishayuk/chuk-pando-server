@@ -16,7 +16,7 @@ Every row is tagged with its evidence class. Only class **A** claims can be test
 | P3 | 57 TB served in a single hour, >99% from local disk cache |
 | P4 | Express pack cache hit rate >99% (consistent hashing to route pack requests) |
 | P5 | Clone/fetch saturates 10 Gbps links on standard cloud VMs |
-| P6 | Merge reliability: previously "at times falling below 90%"; post-cutover 99.99% |
+| P6 | Merge reliability: previously "at times falling below 90%"; afterwards the article says only that switching to Pando "improved merge reliability" (no figure) |
 | P7 | Median push pack <20 KiB, p99 <3 MiB (trunk-only advertisement) |
 | P8 | Kickoff to production in 10 weeks; serving traffic since April 2026 |
 | P9 | Monorepo commit growth +2,442% vs Q1 2024 (Q4 2026 *estimate*) |

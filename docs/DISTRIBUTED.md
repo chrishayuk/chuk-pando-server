@@ -21,12 +21,14 @@ The single-process server stays a supported mode and the verified baseline: no `
 ```
 - **Metadata service.** The existing `meta::Store`, unchanged in semantics, served over a Unix domain socket.
   - Operations: `get(k) → (version, value)`, `scan(prefix)`, and `commit(read_set[(k, version)], writes)`.
-  - Commit validates every read version under the touched keys' stripe locks, appends to the WAL, fsyncs (group
-    commit) and only then replies. A frontend's transaction is therefore exactly today's OCC transaction, with reads
+  - Commit takes exact per-key locks on the touched keys (written keys exclusive, keys only read shared, all
+    acquired at once), validates every read version, appends to the WAL, fsyncs (group commit) and only then
+    replies. A frontend's transaction is therefore exactly today's OCC transaction, with reads
     done remotely.
   - Per-ref compare-and-swap (A4) is preserved because the ref-pointer key is in the read set.
-  - Unrelated branches touch disjoint keys. They contend only on a stripe-hash collision and on the shared WAL fsync,
-    which is group commit, not a lock held across a push.
+  - Unrelated branches touch disjoint keys, so they never wait for each other's locks. They share only the WAL fsync,
+    which is group commit, not a lock held across a push. (Until 2026-11-07 the locks were 4096 hash stripes, and
+    unrelated keys that shared a stripe did wait; audit finding F12, docs/AUDIT-NET-REMEDIATION.md.)
   - **There is no repository lock anywhere.**
 - **Pack store.** A shared directory.
   - `install` is already write-once across processes (`link` with no replace, then fsync of file and directories).
@@ -85,7 +87,8 @@ to back in one run, so comparisons between them are fair; absolute numbers are t
 - **D1:** 15 rounds × 8 writers on one branch through both frontends. One winner per round; versions 1–16, no gap or
   duplicate.
 - **D2:** 16 writers on distinct branches; 14 pushes in flight at the peak, split 65/64 between frontends.
-- **D2 stalled commit:** a commit stalled 3 s inside the service while holding its stripe locks. Pushes to other
+- **D2 stalled commit** (measured with the former striped locks; re-tested with exact per-key locks as `D2KeyLocks`,
+  docs/AUDIT-NET-REMEDIATION.md F12): a commit stalled 3 s inside the service while holding its locks. Pushes to other
   branches finished meanwhile in 57 ms (A) and 39 ms (B). The rival creation of the stalled branch was ordered after it
   and refused ("reference already exists").
   - **Mutant check:** with a test-only frontend-wide push lock (`PANDO_TEST_MUTANT_GLOBAL_LOCK=1`) the unrelated pushes

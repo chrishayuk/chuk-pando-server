@@ -111,11 +111,16 @@ Each entry: assumption / decision, alternatives considered, why.
   distance 4 instead of ~6 KB with the cover's whole copy), with log-sized planning unchanged.
 
 ## D9 Compaction geometry
-- Fanout 4, levels L1..L4 (4, 16, 64, 256 ref versions), per ref, aligned ranges. Covers are built
-  by splicing (dedup + keep in-cover OFS deltas, expand others), not by a fresh delta search, so
-  they improve reuse/self-containment and remove duplicates but do not improve delta compression
-  across L0 boundaries. Covers per ref (not repository-wide) because ref versions are only ordered
-  per ref (no global sequence → no cross-ref contention).
+- Fanout 4, levels L1..L4 (4, 16, 64, 256 ref versions), per ref, aligned ranges. Covers per ref (not
+  repository-wide) because ref versions are only ordered per ref (no global sequence → no cross-ref contention).
+- A cover is first built by splicing its member packs (dedup + keep in-cover OFS deltas, expand others).
+  *Amended 2026-11-08:* covers are then **recompressed by default** (`recompress.rs`, `PANDO_RECOMPRESS=0` turns it
+  off): background compaction re-deltas the cover's objects in a throw-away scratch workspace, and the result is
+  kept only if it holds exactly the same objects, has no REF_DELTA and is smaller; otherwise the spliced cover is
+  kept. So covers now do improve delta compression across L0 boundaries
+  (docs/RECOMPRESSION-ACCEPTANCE.md, docs/COMPRESSION-WORKLOADS.md).
+- This applies to covers only. **Original push (L0) packs are never recompressed or rewritten:** they stay
+  byte-identical as received, and the push path never unpacks them.
 - All packs are kept forever (brief). Orphan blobs from crashed pushes are not garbage-collected.
 
 ## D10 Packfile URIs and the cache service
